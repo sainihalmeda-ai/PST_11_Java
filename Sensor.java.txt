@@ -1,0 +1,53 @@
+import java.util.*;
+import java.util.stream.*;
+
+class Sensor {
+    String id;
+    int temperature;
+
+    Sensor(String id, int temperature) {
+        this.id = id;
+        this.temperature = temperature;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public int getTemperature() {
+        return temperature;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+
+        List<Sensor> readings = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            String id = sc.next();
+            int temp = sc.nextInt();
+
+            readings.add(new Sensor(id, temp));
+        }
+
+        Map<String, Double> averageMap = readings.stream()
+                .filter(s -> s.getTemperature() > 50)
+                .collect(Collectors.groupingBy(
+                        Sensor::getId,
+                        Collectors.averagingInt(Sensor::getTemperature)
+                ));
+
+        averageMap.entrySet()
+                .stream()
+                .sorted((a, b) -> Double.compare(b.getValue(), a.getValue()))
+                .forEach(entry ->
+                        System.out.println(entry.getKey() + " " + entry.getValue()));
+
+        sc.close();
+    }
+}

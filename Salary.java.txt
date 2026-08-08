@@ -1,0 +1,27 @@
+import java.util.*;
+
+public class Salary {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        int[] salary = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            salary[i] = sc.nextInt();
+        }
+
+        int[] updatedSalary = Arrays.stream(salary)
+                                    .map(s -> (int)(s * 1.10))
+                                    .toArray();
+
+        for (int i = 0; i < n; i++) {
+            System.out.print(updatedSalary[i]);
+            if (i < n - 1) {
+                System.out.print(" ");
+            }
+        }
+
+        sc.close();
+    }
+}
